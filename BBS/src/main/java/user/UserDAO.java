@@ -11,7 +11,7 @@ public class UserDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	public UserDAO() {
+	public UserDAO() { //SQL에서 접근해서 데이터 입력하는 데이터 객체
 		try {
 			String dbURL = "jdbc:mysql://localhost:3306/BBS";
 			String dbID = "root";
@@ -40,5 +40,23 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return -2; //데이터베이스 오류
+	}
+	
+	public int join(User user) { //user클래스 이용한 인스턴스
+		String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, ?)";
+		
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, user.getUserID());
+			pstmt.setString(2, user.getUserPassword());
+			pstmt.setString(3, user.getUserName());
+			pstmt.setString(4, user.getUserGender());
+			pstmt.setString(5, user.getUserEmail());
+			
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 }
