@@ -4,8 +4,8 @@
 <%@ page import="java.io.PrintWriter" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 <jsp:useBean id="bbs" class="bbs.Bbs" scope="page"/>
-<jsp:setProperty name="user" property="bbsTitle"/>
-<jsp:setProperty name="user" property="bbsContent"/>	
+<jsp:setProperty name="bbs" property="bbsTitle"/>
+<jsp:setProperty name="bbs" property="bbsContent"/>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +45,7 @@
 			} else {
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("location.href = 'ㅠㅠㄴ.jsp'");
+				script.println("location.href = 'bbs.jsp'");
 				script.println("</script>");
 			} 
 		}
