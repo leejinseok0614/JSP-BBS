@@ -21,6 +21,7 @@ public class BbsDAO {
 			e.printStackTrace();
 		}
     }
+    
     public String getDate() // 현재시간을 넣어주기위해
     {
         String SQL = "SELECT NOW()"; // 현재시간을 나타내는 mysql
@@ -52,6 +53,7 @@ public class BbsDAO {
         }
         return -1; // 데이터베이스 오류
     }
+    
     public int write(String bbsTitle, String userID, String bbsContent) {
         String SQL = "INSERT INTO BBS VALUES (?,?,?,?,?,?)";
         try {
@@ -68,6 +70,7 @@ public class BbsDAO {
         }
         return -1; // 데이터베이스 오류
     }
+    
     public ArrayList<Bbs> getList(int pageNumber)
     {
         String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10"; // 내림차순으로 가장 마지막에 쓰인 것을 가져온다
@@ -91,7 +94,8 @@ public class BbsDAO {
         }
         return list; 
     }
-//    페이징 처리를 위한 함수
+    
+    //페이징 처리를 위한 함수
     public boolean nextPage(int pageNumber) {
         String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1"; 
         try {
@@ -106,5 +110,30 @@ public class BbsDAO {
             e.printStackTrace();
         }
         return false; 
+    }
+    
+    //글을 불러오는 함수
+    public Bbs getBbs(int bbsID) {
+    	String SQL = "SELECT * FROM BBS WHERE bbsID = ?"; 
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, bbsID);
+            rs = pstmt.executeQuery();
+            if (rs.next())
+            {
+                Bbs bbs = new Bbs();
+                bbs.setBbsID(rs.getInt(1));
+                bbs.setBbsTitle(rs.getString(2));
+                bbs.setUserID(rs.getString(3));
+                bbs.setBbsDate(rs.getString(4));
+                bbs.setBbsContent(rs.getString(5));
+                bbs.setBbsAvailable(rs.getInt(6));
+                
+                return bbs;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null; 
     }
 }
