@@ -13,13 +13,13 @@
 	<link rel="stylesheet" href="css/custom.css">
 	
 	<title>Jinseok BBS</title>
-<style type = "text/css">
-    a, a:hover
-    {
-        color: #000000;
-        text-decoration: none;
-    }
-</style>
+	<style type = "text/css">
+    	a, a:hover
+    	{
+        	color: #000000;
+        	text-decoration: none;
+    	}
+	</style>
 </head>
 <body>
 <%
@@ -105,8 +105,8 @@
                 %>
                 
                     <tr>
-                        <td><%=list.get(i).getBbsID() %></td>
-                        <td><a href="view.jsp?bbsID=<%=list.get(i).getBbsID()%>"><%=list.get(i).getBbsTitle() %></a></td>
+                        <td><%=list.get(i).getBbsID() %></td> <!-- 특수문자를 제대로 출력하기위해 & 악성스크립트를 방지하기위해 -->
+                        <td><a href="view.jsp?bbsID=<%=list.get(i).getBbsID()%>"><%=list.get(i).getBbsTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %></a></td>
                         <td><%=list.get(i).getUserID() %></td>
                         <td><%=list.get(i).getBbsDate().substring(0,11) + list.get(i).getBbsDate().substring(11, 13) + "시" 
                         + list.get(i).getBbsDate().substring(14,16) + "분" %></td>
